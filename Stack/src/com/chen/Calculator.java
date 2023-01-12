@@ -6,14 +6,17 @@ package com.chen;
  */
 public class Calculator {
     public static void main(String[] args) {
-        String str="30+2*6-2";
+        String str="30+2*6-20+20+60";
         int num1,num2,opera;
         int res;
+        String val="";
         ArrayStack2 numStack = new ArrayStack2(10);
         ArrayStack2 operaStack = new ArrayStack2(10);
         for(int i=0;i<str.length();i++){
             int ch=str.charAt(i);
             if(operaStack.isOpera(ch)){//判断是否为操作符
+                numStack.push(Integer.valueOf(val));
+                val="";
                 //是操作符，则先判断符号栈是否为空，为空则直接压入栈
                 if(operaStack.isEmpty()){//判断符号栈是否为空
                     operaStack.push(ch);
@@ -34,9 +37,10 @@ public class Calculator {
                     }
                 }
             }else{
-                numStack.push(ch-48);
+               val+=ch-48;
             }
         }
+        numStack.push(Integer.valueOf(val));
         while(!operaStack.isEmpty()){
             num1=numStack.pop();
             num2=numStack.pop();
